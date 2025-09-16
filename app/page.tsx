@@ -1,103 +1,184 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [address, setAddress] = useState('0x742d35Cc6634C0532925a3b844Bc9e7595f0fEb1');
+  const [response, setResponse] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const testAPI = async () => {
+    if (!address) return;
+    
+    const url = `/api/avatar/${address.trim()}`;
+    setResponse(`GET ${url}`);
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+        <header className="mb-8 sm:mb-16">
+          <h1 className="text-2xl sm:text-4xl font-mono font-bold mb-2">AVATARIO</h1>
+          <p className="text-gray-400 text-sm sm:text-base">by Bario Entertainment System</p>
+        </header>
+
+        <section className="mb-8 sm:mb-12">
+          <h2 className="text-xl sm:text-2xl font-mono font-bold mb-4">API Documentation</h2>
+          <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded mb-6">
+            <p className="text-gray-300 leading-relaxed">
+              This service was originally created for <span className="text-white font-mono">baes.app</span> to display 
+              Bario Punks-inspired avatars for users who comment without ENS or Basename profile pictures, 
+              replacing empty silhouettes with generated pixel art. 
+            </p>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              The API is domain-restricted and won&apos;t work if you try to use it directly on your site. 
+              However, we&apos;d be happy if you&apos;re interested in using it! Please reach out to us at{' '}
+              <a 
+                href="https://x.com/basebario" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:underline font-mono"
+              >
+                @basebario
+              </a>{' '}
+              to discuss integration possibilities.
+            </p>
+          </div>
+        </section>
+
+        <section className="mb-8 sm:mb-12">
+          <h3 className="text-lg sm:text-xl font-mono font-bold mb-4">Endpoint</h3>
+          <div className="bg-gray-900 border border-gray-800 p-3 sm:p-4 rounded mb-4">
+            <code className="text-green-400 break-all text-xs sm:text-sm">GET https://avatario.baes.so/api/avatar/[address]</code>
+          </div>
+        </section>
+
+        <section className="mb-8 sm:mb-12">
+          <h3 className="text-lg sm:text-xl font-mono font-bold mb-4">Parameters</h3>
+          <div className="space-y-4">
+            <div>
+              <code className="text-blue-400">address</code>
+              <span className="text-gray-400 ml-2">string</span>
+              <span className="text-red-400 ml-2">required</span>
+              <p className="text-gray-300 mt-1">Valid Ethereum address (0x...)</p>
+            </div>
+            <div>
+              <code className="text-blue-400">size</code>
+              <span className="text-gray-400 ml-2">integer</span>
+              <span className="text-gray-500 ml-2">optional</span>
+              <p className="text-gray-300 mt-1">Avatar size in pixels (16-2048, default: 512)</p>
+              <p className="text-gray-400 text-sm mt-1">Supported sizes: 16, 32, 64, 128, 256, 512, 1024, 2048</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-12">
+          <h3 className="text-xl font-mono font-bold mb-4">Response</h3>
+          <p className="text-gray-300 mb-2">Returns PNG image with headers:</p>
+          <div className="bg-gray-900 border border-gray-800 p-4 rounded">
+            <div className="text-gray-300">
+              <div><span className="text-yellow-400">Content-Type:</span> image/png</div>
+              <div><span className="text-yellow-400">Cache-Control:</span> public, max-age=31536000, immutable</div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-8 sm:mb-12">
+          <h3 className="text-lg sm:text-xl font-mono font-bold mb-4">Examples</h3>
+          <div className="space-y-4">
+            <div className="bg-gray-900 border border-gray-800 p-3 sm:p-4 rounded">
+              <code className="text-green-400 break-all text-xs sm:text-sm">GET https://avatario.baes.so/api/avatar/0x742d35Cc6634C0532925a3b844Bc9e7595f0fEb1</code>
+            </div>
+            <div className="bg-gray-900 border border-gray-800 p-3 sm:p-4 rounded">
+              <code className="text-green-400 break-all text-xs sm:text-sm">GET https://avatario.baes.so/api/avatar/0x742d35Cc6634C0532925a3b844Bc9e7595f0fEb1?size=256</code>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-8 sm:mb-12">
+          <h3 className="text-lg sm:text-xl font-mono font-bold mb-4">Test API</h3>
+          <div className="border border-gray-800 p-6 rounded">
+            <div className="mb-4">
+              <label className="block text-sm font-mono mb-2">Ethereum Address</label>
+              <input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="0x742d35Cc6634C0532925a3b844Bc9e7595f0fEb1"
+                className="w-full p-3 bg-black border border-gray-700 text-white font-mono focus:border-white focus:outline-none"
+              />
+            </div>
+            <button
+              onClick={testAPI}
+              className="bg-white text-black px-6 py-2 font-mono hover:bg-gray-200 transition-colors"
+            >
+              TEST REQUEST
+            </button>
+            {response && (
+              <div className="mt-4 p-4 bg-gray-900 border border-gray-800 rounded">
+                <p className="text-green-400 font-mono text-xs sm:text-sm break-all">{response}</p>
+                {address && (
+                  <Image 
+                    src={`/api/avatar/${address.trim()}`}
+                    alt="Avatar"
+                    width={128}
+                    height={128}
+                    className="mt-4 border border-gray-700 pixelated"
+                    unoptimized
+                  />
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+
+        <footer className="mt-16 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm space-y-4">
+          <div className="flex items-center justify-center space-x-3">
+            <a 
+              href="https://baes.so" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Image 
+                src="https://baes.so/logotype.png" 
+                alt="Bario Entertainment System" 
+                width={200}
+                height={48}
+                className="h-12 w-auto object-contain hover:opacity-80 transition-opacity"
+              />
+            </a>
+          </div>
+          <p>
+            Want to use this API for your project? Please reach out to us at{' '}
+            <a 
+              href="https://x.com/basebario" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white hover:underline"
+            >
+              @basebario
+            </a>
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-6">
+            <a 
+              href="https://baes.so" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              Baes.so Website
+            </a>
+            <a 
+              href="https://baes.app" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              Baes.App Onchain Video Game Marketplace
+            </a>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
