@@ -94,7 +94,7 @@ export default function Home() {
               <div className="space-y-2 text-sm">
                 <div className="flex items-start space-x-2">
                   <span className="text-gray-500">1.</span>
-                  <span className="text-gray-300">Fork the repository or click "Deploy on Vercel"</span>
+                  <span className="text-gray-300">Fork the repository or click &quot;Deploy on Vercel&quot;</span>
                 </div>
                 <div className="flex items-start space-x-2">
                   <span className="text-gray-500">2.</span>
