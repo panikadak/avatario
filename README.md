@@ -56,7 +56,7 @@ Returns a PNG image with the following headers:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/avatario.git
+   git clone https://github.com/panikadak/avatario.git
    cd avatario
    ```
 
