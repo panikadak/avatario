@@ -8,6 +8,10 @@ import { DEFAULT_AVATAR_SIZE, MIN_AVATAR_SIZE, MAX_AVATAR_SIZE } from '@/app/typ
 
 export const runtime = 'nodejs';
 
+const BASE_HEADERS = {
+  'Cross-Origin-Resource-Policy': 'cross-origin'
+} as const;
+
 export async function GET(
   request: NextRequest,
   context: { params: Promise<{ address: string }> }
@@ -17,7 +21,7 @@ export async function GET(
     if (!isAllowedDomain(request)) {
       return NextResponse.json(
         { error: 'Access denied' },
-        { status: 403 }
+        { status: 403, headers: BASE_HEADERS }
       );
     }
 
@@ -27,14 +31,14 @@ export async function GET(
     if (!address) {
       return NextResponse.json(
         { error: 'Ethereum address is required' },
-        { status: 400 }
+        { status: 400, headers: BASE_HEADERS }
       );
     }
     
     if (!isValidEthereumAddress(address)) {
       return NextResponse.json(
         { error: 'Invalid Ethereum address format' },
-        { status: 400 }
+        { status: 400, headers: BASE_HEADERS }
       );
     }
     
@@ -55,6 +59,7 @@ export async function GET(
       return new NextResponse(new Uint8Array(cachedAvatar), {
         status: 200,
         headers: {
+          ...BASE_HEADERS,
           'Content-Type': 'image/png',
           'Cache-Control': 'public, max-age=31536000, immutable',
           'X-Ethereum-Address': normalizedAddress,
@@ -69,7 +74,7 @@ export async function GET(
     if (layers.length === 0) {
       return NextResponse.json(
         { error: 'Failed to select avatar layers' },
-        { status: 500 }
+        { status: 500, headers: BASE_HEADERS }
       );
     }
     
@@ -81,6 +86,7 @@ export async function GET(
     return new NextResponse(new Uint8Array(avatarBuffer), {
       status: 200,
       headers: {
+        ...BASE_HEADERS,
         'Content-Type': 'image/png',
         'Cache-Control': 'public, max-age=31536000, immutable',
         'X-Ethereum-Address': normalizedAddress,
@@ -92,7 +98,7 @@ export async function GET(
     console.error('Avatar generation error:', error);
     return NextResponse.json(
       { error: 'Failed to generate avatar' },
-      { status: 500 }
+      { status: 500, headers: BASE_HEADERS }
     );
   }
 }
